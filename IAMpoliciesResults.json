@@ -1,0 +1,7 @@
+[
+    {
+        "Arn": "arn:aws:iam::aws:policy/AdministratorAccess",
+        "Policy Name": "AdministratorAccess",
+        "Risk": "Overly permissive Iam policy, Critical"
+    }
+]
