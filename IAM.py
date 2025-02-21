@@ -32,7 +32,7 @@ if __name__ == '__main__':
     if results :
         print("Potential Security Risks Found:")
         for r in results:
-            print(f"{r['Arn']} {r['Policy Name']} {r['Risk']}")
+            print(f"{r['Policy Name']} {r['Risk']}")
         save_to_json_file(results)
     else:
         print("No security risks detected!")

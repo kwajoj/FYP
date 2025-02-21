@@ -1,0 +1,22 @@
+[
+    {
+        "Bucket Name": "kwajotestbucket",
+        "Risk": "WARNING public Access is open"
+    },
+    {
+        "Bucket Name": "kwajotestbucket",
+        "Risk": "WARNING public Access is open"
+    },
+    {
+        "Bucket Name": "kwajotestbucket",
+        "Risk": "WARNING public Access is open"
+    },
+    {
+        "Bucket Name": "kwajotestbucket",
+        "Risk": "WARNING public Access is open"
+    },
+    {
+        "Bucket Name": "kwajotestbucket",
+        "Risk": "public Access and all users have access"
+    }
+]
