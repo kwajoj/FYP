@@ -10,8 +10,9 @@ def get_IAM_policies():
         if "AdministratorAccess" in pName:
             risk = "Critical" if pName == "AdministratorAccess" else "High"
             results.append({
-                "Policy Name": pName,
-                "Risk": "Overly permissive Iam policy, " + risk
+                "Policy Name": "Policy:" + pName,
+                "Risk Level": "Risk Level:" + risk,
+                "Risk":"- Overly permissive IAM policy"
             })
 
     return results
@@ -26,13 +27,13 @@ def save_to_json_file(data):
     print("Security scan results saved to IAMpoliciesResults.json")
 
 
-if __name__ == '__main__':
+def IAM_main():
     results = get_IAM_policies()
 
     if results :
         print("Potential Security Risks Found:")
         for r in results:
-            print(f"{r['Policy Name']} {r['Risk']}")
+            print(f"{r['Policy Name']} {r['Risk Level']} {r['Risk']}")
         save_to_json_file(results)
     else:
         print("No security risks detected!")

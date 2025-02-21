@@ -34,7 +34,7 @@ def save_to_json_file(data):
     print("Security scan results saved to securityResults.json")
 
 
-if __name__ == '__main__':
+def sg_main():
     results = get_security_groups()
 
     if results :
