@@ -1,10 +1,9 @@
 [
     {
         "Bucket Name": "kwajotestbucket",
-        "Risk": "(Bucket setting) CRITICAL: public Access is open"
-    },
-    {
-        "Bucket Name": "kwajotestbucket",
-        "Risk": "(ACL) CRITICAL: Public Access and All Users have access"
+        "Risk": [
+            "(Bucket setting) CRITICAL: Public Access is OPEN!",
+            "(ACL) CRITICAL: Public Access + All Users have access!"
+        ]
     }
 ]

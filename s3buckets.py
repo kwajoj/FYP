@@ -6,36 +6,31 @@ def get_s3_buckets():
     response = s3.list_buckets()
     results = []
 
-    for buckets in response['Buckets']:
+    for buckets in response.get('Buckets', []):
         bucketName = buckets['Name']
+        risk = []
         acls = s3.get_bucket_acl(Bucket=bucketName)
         publicAccess = s3.get_public_access_block(Bucket=bucketName)
-        public = False
-        users = False
+    
 
         #check block public access (bucket settings)
         config = publicAccess.get('PublicAccessBlockConfiguration',{})
-        if all(config.values()):
-            results.append({
-                "Bucket Name": bucketName,
-                "Risk": "(Bucket setting) public Access is blocked"
-             })
+        if config:
+            if all(config.values()):
+                risk.append("(Bucket setting) Public Access is blocked")
 
-        elif not all(config.values()):
-            results.append({
-                "Bucket Name": bucketName,
-                "Risk": "(Bucket setting) CRITICAL: public Access is open"
-             })
+            elif not all(config.values()):
+                risk.append("(Bucket setting) CRITICAL: Public Access is OPEN!")
+            else:
+                risk.append("(Bucket Setting) CRITICAL: Not all Public Access settings are blocked, check configurations!")
 
         else:
-            results.append({
-                "Bucket Name": bucketName,
-                "Risk": "(Bucket Setting) CRITICAL: Not all public Access settings are blocked blocked"
-            })
-
-
+            risk.append("(Bucket setting) CRITICAL: No Public Access block setting found!")
 
         #check acls
+        public = False
+        users = False
+
         for grants in acls['Grants']:
             grantee = grants.get('Grantee',{}).get('URI','')
 
@@ -45,12 +40,12 @@ def get_s3_buckets():
                 users = True
 
 
-        if public and users:
-            risk = "(ACL) CRITICAL: Public Access and All Users have access"
-        elif public:
-            risk = "(ACL) CRITICAL: Public Access"
+        if public:
+            risk.append("(ACL) CRITICAL: Public Access!")
         elif users:
-            risk = "(ACL) HIGH: All Users have access"
+            risk.append("(ACL) HIGH: All Authenticated Users have access!")
+        else:
+            risk.append("(ACL) Secure ACL configurations")
 
         results.append({
                 "Bucket Name": bucketName,
@@ -77,7 +72,9 @@ def s3_main():
     if results :
         print("Potential Security Risks Found:")
         for r in results:
-            print(f"{r['Bucket Name']} {r['Risk']}")
+            print(f"{r['Bucket Name']}:")
+            for risk in r['Risk']:
+                print(f"  - {risk}")
         save_to_json_file(results)
     else:
         print("No security risks detected!")
