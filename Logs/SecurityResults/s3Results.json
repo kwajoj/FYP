@@ -1,0 +1,9 @@
+[
+    {
+        "Bucket Name": "kwajotestbucket",
+        "Risk": [
+            "(Bucket Setting) CRITICAL: Not all or partial Public Access settings are blocked, check configurations!",
+            "(ACL) CRITICAL: Public Access!"
+        ]
+    }
+]

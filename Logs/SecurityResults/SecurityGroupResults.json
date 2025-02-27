@@ -1,0 +1,20 @@
+[
+    {
+        "Security Group": "TestingSecurityGroup",
+        "Group ID": "sg-0d157c9f9a9004ba1",
+        "Open Port": 80,
+        "Risk": "Public access detected (0.0.0.0/0), High!"
+    },
+    {
+        "Security Group": "TestingSecurityGroup",
+        "Group ID": "sg-0d157c9f9a9004ba1",
+        "Open Port": 22,
+        "Risk": "Public access detected (0.0.0.0/0), Critical!"
+    },
+    {
+        "Security Group": "TestingSecurityGroup",
+        "Group ID": "sg-0d157c9f9a9004ba1",
+        "Open Port": 443,
+        "Risk": "Public access detected (0.0.0.0/0), Medium"
+    }
+]

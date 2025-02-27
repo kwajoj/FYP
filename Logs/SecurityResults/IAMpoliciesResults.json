@@ -1,0 +1,9 @@
+[
+    {
+        "Policy Name": "Policy:AdministratorAccess",
+        "Risk Level": "Risk Level:Critical",
+        "Risk": [
+            "Overly permissive IAM policy"
+        ]
+    }
+]
