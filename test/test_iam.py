@@ -1,15 +1,13 @@
 import pytest
-from IAM import get_IAM_polocies
+from Scanner.IAM import get_IAM_policies
 
 def test_iam_policies(mocker):
-	mock_boto = mocker.patch("s3buckets.boto3.client")
-	mock_s3 = mock_boto.return_value
-	mock_s3.list_buckets.return_value = {"Buckets": [{"Name": "testOpenBucket"}]}
-	mock_s3.get_bucket_acl.return_value = {"Grants": [{"Grantee": {"Type": "Group", "URI": "http://acs.amazonaws.com/groups/global/AllUsers"}}]}
+	mock_boto = mocker.patch("Scanner.IAM.boto3.client")
+	mock_iam = mock_boto.return_value
+	mock_iam.list_policies.return_value = {"Policies": [{"PolicyName": "AdministratorAccess"}]}
 
-	result = get_s3_buckets()
+	result = get_IAM_policies()
 
 	assert len(result) == 1
-	assert "Public Access!" in result[0]["Risk"][1]
-	mock_s3.list_buckets.assert_called_once()
-	mock_s3.get_bucket_acl.assert_called_once_with(Bucket="testOpenBucket")
+	assert "Overly permissive IAM policy" in result[0]["Risk"][0]
+	mock_iam.list_policies.assert_called_once()

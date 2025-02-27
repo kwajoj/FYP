@@ -14,12 +14,17 @@ def get_security_groups():
                 for ipRange in permissions['IpRanges']:
                     if ipRange['CidrIp'] == '0.0.0.0/0':# Public access detected
                         from_port = permissions.get('FromPort', 'All')
-                        risk = "High" if from_port == 22 else "Medium"
+                        if from_port in (22, 23, 25, 139, 445, 3389, 5900, 6379, 9200, 27017):
+                            risk = "Public access detected, Critical!" 
+                        elif from_port in (21, 53, 80, 110, 143, 389, 3306):
+                            risk = "Public access detected, High!"
+                        else:
+                            risk = "Public access detected, Medium"
                         results.append({
                             "Security Group": groupName,
                             "Group ID": groupId,
                             "Open Port": permissions.get('FromPort', 'All'),
-                            "Risk": "Public access detected, " + risk
+                            "Risk": risk
                         })
 
     return results
@@ -40,9 +45,10 @@ def sg_main():
     if results :
         print("Potential Security Risks Found:")
         for r in results:
-            print(f"{r['Security Group']} (Port {r['Open Port']}): {r['Risk']}")
+            print(f"{r['Security Group']}, {r['Group ID']} (Port {r['Open Port']}): {r['Risk']}")
+        save_to_json_file(results)
     else:
         print("No security risks detected!")
 
 
-    save_to_json_file(results)
+    

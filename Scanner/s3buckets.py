@@ -18,11 +18,8 @@ def get_s3_buckets():
         if config:
             if all(config.values()):
                 risk.append("(Bucket setting) Public Access is blocked")
-
-            elif not all(config.values()):
-                risk.append("(Bucket setting) CRITICAL: Public Access is OPEN!")
             else:
-                risk.append("(Bucket Setting) CRITICAL: Not all Public Access settings are blocked, check configurations!")
+                risk.append("(Bucket Setting) CRITICAL: Not all or partial Public Access settings are blocked, check configurations!")
 
         else:
             risk.append("(Bucket setting) CRITICAL: No Public Access block setting found!")

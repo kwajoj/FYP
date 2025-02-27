@@ -6,13 +6,15 @@ def get_IAM_policies():
     response = iamPoli.list_policies(Scope='All')
     results = []
     for policies in response['Policies']:
+        riskMessage = []
         pName = policies['PolicyName']
         if "AdministratorAccess" in pName:
             risk = "Critical" if pName == "AdministratorAccess" else "High"
+            riskMessage.append("-Overly permissive IAM policy")
             results.append({
                 "Policy Name": "Policy:" + pName,
                 "Risk Level": "Risk Level:" + risk,
-                "Risk":"- Overly permissive IAM policy"
+                "Risk": riskMessage
             })
 
     return results
